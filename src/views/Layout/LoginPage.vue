@@ -74,7 +74,6 @@ export default {
   methods: {
     loginSubmit() {
       const auth = { username: this.username, password: this.password };
-      // axios.post("http://localhost:2727/public/api/user/login", auth)
       axios.post("http://182.255.0.149/API_Tambak/public/api/user/login_admin", auth)
       .then((res)=> {
         console.log(res.data.user)

@@ -12,19 +12,22 @@
           Akun: {{ info.nama }}
         </h2>
       </v-card-title>
-      <v-text-field class="mx-14 mt-6"
+      <v-text-field
+        class="mx-14 mt-6"
         color="green lighten-1"
         :value="info.id"
         label="id"
         readonly
       ></v-text-field>
-      <v-text-field class="mx-14 mt-6"
+      <v-text-field
+        class="mx-14 mt-6"
         color="green lighten-1"
         :value="info.username"
         label="Username"
         readonly
       ></v-text-field>
-      <v-text-field class="mx-14 mt-6"
+      <v-text-field
+        class="mx-14 mt-6"
         color="green lighten-1"
         :value="info.nama"
         label="Nama Pengguna"
@@ -55,12 +58,12 @@
                   v-model="nama"
                   :rules="[rules.required]"
                 ></v-text-field>
-                <v-text-field
+                <!-- <v-text-field
                   color="green lighten-1"
                   label="Password"
                   v-model="password"
                   :rules="[rules.required]"
-                ></v-text-field>
+                ></v-text-field> -->
               </v-container>
             </v-card-text>
             <v-card-actions>
@@ -70,6 +73,32 @@
               </v-btn>
               <v-btn color="green lighten-1" text @click="submitForm()">
                 Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <v-dialog v-model="dialogres" persistent max-width="300px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn color="primary" dark v-bind="attrs" v-on="on" class="mx-4">
+              Reset Password</v-btn
+            >
+          </template>
+          <v-card class="green--text">
+            <v-card-title>
+              <span class="text-h5">Reset Password</span>
+            </v-card-title>
+            <v-card-text>
+              <v-container>
+                <body-1>Apakah anda yakin?</body-1>
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="green lighten-1" text @click="dialogres = false">
+                Tidak
+              </v-btn>
+              <v-btn color="green lighten-1" text @click="resetPass()">
+                Yakin
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -112,12 +141,14 @@ export default {
   data() {
     return {
       config: "",
+      pass: "pass",
       info: [],
       username: "",
       name: "",
-      password:"",
+      password: "",
       dialog: false,
       dialogdel: false,
+      dialogres: false,
       rules: {
         required: (value) => !!value || "Form ini harus diisi",
       },
@@ -138,16 +169,38 @@ export default {
           router.push("/");
         })
         .catch((error) => {
-          alert("Pengguna gagal dihapus")
+          alert("Pengguna gagal dihapus");
           console.log(error);
           this.errored = true;
         });
+    },
+    resetPass() {
+      let formPass = new FormData();
+      formPass.append("username", this.info.username);
+      formPass.append("nama", this.info.nama);
+      formPass.append("password", this.pass);
+      formPass.append("_method", "POST");
+
+      axios
+        .post(
+          "http://182.255.0.149/API_Tambak/public/api/user/" +
+            this.$route.params.id,
+          formPass,
+          this.config
+        )
+        .then(() => {
+          alert("Password berhasil di reset!");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.dialogres = false;
     },
     submitForm() {
       let formData = new FormData();
       formData.append("username", this.username);
       formData.append("nama", this.nama);
-      formData.append("password", this.password);
+      // formData.append("password", this.password);
       formData.append("_method", "POST");
 
       axios
