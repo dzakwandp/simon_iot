@@ -32,6 +32,7 @@
               color="green lighten-1"
               v-model="username"
               :rules="[rules.requiredUser]"
+              v-on:keyup.enter="loginSubmit"
             ></v-text-field>
             <v-text-field
               label="Password"
@@ -41,6 +42,7 @@
               :type="showpass ? 'text' : 'password'"
               @click:append="showpass = !showpass"
               :rules="[rules.requiredPass]"
+              v-on:keyup.enter="loginSubmit"
             ></v-text-field>
             <small v-text="errormessage" class="red--text"></small>
             <v-spacer></v-spacer>

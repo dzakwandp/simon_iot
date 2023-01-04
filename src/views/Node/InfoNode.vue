@@ -18,6 +18,12 @@
       label="Deskripsi"
       readonly
     ></v-text-field>
+    <v-text-field
+      color="green lighten-1"
+      :value="namafix"
+      label="Nama Pemilik"
+      readonly
+    ></v-text-field>
     <v-row justify="center">
       <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on, attrs }">
@@ -93,7 +99,9 @@ export default {
   data() {
     return {
       config: "",
+      namafix: [],
       info: [],
+      users: [],
       name: "",
       desc: "",
       dialog: false,
@@ -113,9 +121,9 @@ export default {
         )
         .then((res) => {
           console.log(res);
-          this.dialogdel=false;
-          alert('Tambak berhasil dihapus');
-          router.push('/node')
+          this.dialogdel = false;
+          alert("Tambak berhasil dihapus");
+          router.push("/node");
         })
         .catch((error) => {
           console.log(error);
@@ -158,6 +166,7 @@ export default {
 
       this.dialog = false;
     },
+    getNama() {},
   },
   created() {
     let config = {
@@ -168,6 +177,17 @@ export default {
     this.config = config;
     axios
       // .get("http://localhost:2727/public/api/tambak/" + this.$route.params.id)
+      .get("http://182.255.0.149/API_Tambak/public/api/all_users", config)
+      .then((response) => {
+        this.users = response.data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        this.errored = true;
+      })
+      .finally(() => (this.loading = false));
+    axios
+      // .get("http://localhost:2727/public/api/tambak/" + this.$route.params.id)
       .get(
         "http://182.255.0.149/API_Tambak/public/api/tambak/" +
           this.$route.params.id,
@@ -175,6 +195,14 @@ export default {
       )
       .then((response) => {
         this.info = response.data.data;
+        console.log(this.info);
+        var nama = this.users
+          .filter((e) => e.id === this.info.id_user)
+          .map((e) => {
+            return  nama=e.nama ;
+          });
+        this.namafix=nama
+        console.log(this.namafix);
       })
       .catch((error) => {
         console.log(error);

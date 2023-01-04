@@ -180,7 +180,6 @@ export default {
     .then((res)=>{
       // console.log(res.data.data)
       this.logrusaks=res.data.data
-      console.log(this.logs)
     })
     .catch((error)=>{
       console.log(error)

@@ -465,25 +465,25 @@ export default {
       let arrValue = [];
       switch (selectedKode) {
         case "pH":
-          arrValue = [7, 9];
+          arrValue = [6.5, 9.5];
           break;
         case "TDS":
           arrValue = [1000, 3000];
           break;
         case "Suhu":
-          arrValue = [26, 30];
+          arrValue = [28, 33];
           break;
         // case 'Ketinggian':
         //     arrValue = [25, 40]
         //     break;
         case "Oksigen":
-          arrValue = [4, 8];
+          arrValue = [4, 8.5];
           break;
         case "Kekeruhan":
-          arrValue = [25, 40];
+          arrValue = [0, 30];
           break;
         default:
-          arrValue = [10, 10];
+          arrValue = [0, 0];
           break;
       }
       this.chartOptions.plugins.annotation.annotations.line1.yMin = arrValue[0];
