@@ -1,4 +1,10 @@
-# temon_iot
+# Simon_IOT
+This project contains website to watch data from Simon (Sistem Monitoring) hardware to monitor the quality of vanname shrimp pond water. Developed using Vue.js 2 framework and Vuetify for styling, this project also using Chart.js plugin for displaying the data from hardware.
+
+Feel free to contact me at:
+```
+diegodzakwan@gmail.com
+```
 
 ## Project setup
 ```
